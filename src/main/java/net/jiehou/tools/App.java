@@ -26,7 +26,7 @@ public class App
     public static void main( String[] args ) throws IOException, ExecutionException, InterruptedException, SQLException, ClassNotFoundException
     {
 		
-		if(args.length <= 2)
+		if(args.length < 2)
 			throw new RuntimeException("Arguments is too few");
 		
 		DatabaseExecutor dbExecutor = new DatabaseExecutor(args[0]);
