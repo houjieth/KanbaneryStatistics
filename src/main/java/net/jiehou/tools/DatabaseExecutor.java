@@ -9,6 +9,9 @@ import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 public class DatabaseExecutor {
 	
 	private Connection conn;
@@ -91,5 +94,39 @@ public class DatabaseExecutor {
 		ResultSet result = stat.executeQuery("select * from sums order by " +
 				"statTime desc limit 1");
 		return result.getFloat(columnName);
+	}
+	
+	public float getOneDaySpeed(String columnName) throws SQLException {
+		Statement stat = conn.createStatement();
+		ResultSet result = stat.executeQuery("select * from sums order by " +
+				"statTime desc limit 2");
+		result.next(); // doesn't move iterator when next() is called in the first time
+		float todayPoints = result.getFloat(columnName);
+		result.next();
+		float yesterdayPoints = result.getFloat(columnName);
+		return todayPoints - yesterdayPoints;
+	}
+	
+	public float getSevenDaySpeed(String columnName) throws SQLException {
+		Statement stat = conn.createStatement();
+		ResultSet result = stat.executeQuery("select * from sums order by " +
+				"statTime desc limit 8");
+		result.next(); // doesn't move iterator when next() is called in the first time
+		float todayPoints = result.getFloat(columnName);
+		float oneWeekAgoPoints = 0;
+		while(result.next()) {
+			oneWeekAgoPoints = result.getFloat(columnName);
+		}
+		return (todayPoints - oneWeekAgoPoints) / 7;
+	}
+	
+	public float getAllTimeSpeed(String columnName) throws SQLException {
+		Statement stat = conn.createStatement();
+		ResultSet result = stat.executeQuery("select * from sums order by " +
+				"statTime desc limit 1");
+		result.next(); // doesn't move iterator when next() is called in the first time
+		float todayPoints = result.getFloat(columnName);
+		int days = Days.daysBetween(new DateTime(2013, 2, 21, 0, 0), new DateTime()).getDays();
+		return todayPoints / days;
 	}
 }

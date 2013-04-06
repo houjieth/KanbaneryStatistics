@@ -19,6 +19,9 @@ public class FinishedTask {
 		this.point = point;
 		this.deadline = deadline;
 		this.finishDate = finishDate;
-		this.spill = Days.daysBetween(deadline, finishDate).getDays();
+		if(deadline != null)
+			this.spill = Days.daysBetween(deadline, finishDate).getDays();
+		else
+			this.spill = Days.MAX_VALUE.getDays();
 	}
 }

@@ -142,7 +142,7 @@ public class ServiceHelper {
 				Long estimateId = task.getEstimateId();
 				float point = 0;
 				DateTime deadline = null, finishDate = null;
-				if(estimateId != null) 
+				if(estimateId != null)
 					point = estimates.byId(estimateId).getValue().floatValue();
 				if(task.getDeadline() != null)
 					deadline = new DateTime(task.getDeadline());

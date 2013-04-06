@@ -66,8 +66,18 @@ public class App
 			
 			service.close();
 		}
+		// args.length >= 3
 		else if(args[1].equals("getAllTimeSum")) {
 			System.out.print(dbExecutor.getAllTimeSum(args[2]));
+		}
+		else if(args[1].equals("getOneDaySpeed")) {
+			System.out.print(dbExecutor.getOneDaySpeed(args[2]));
+		}
+		else if(args[1].equals("getSevenDaySpeed")) {
+			System.out.print(dbExecutor.getSevenDaySpeed(args[2]));
+		}
+		else if(args[1].equals("getAllTimeSpeed")) {
+			System.out.print(dbExecutor.getAllTimeSpeed(args[2]));
 		}
 			
 		dbExecutor.close();
